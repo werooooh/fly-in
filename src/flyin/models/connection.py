@@ -89,10 +89,3 @@ class Connection:
             len(self.drones_in_transit) + incoming_count
             <= self.max_link_capacity
         )
-
-    def __repr__(self) -> str:
-        """Return a debug-friendly representation of the connection."""
-        return (
-            f"Connection({self.zone_a.name!r}-{self.zone_b.name!r}, "
-            f"capacity={self.max_link_capacity})"
-        )

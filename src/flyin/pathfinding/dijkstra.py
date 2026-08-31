@@ -23,11 +23,6 @@ class PathResult:
         self.path = path
         self.total_cost = total_cost
 
-    def __repr__(self) -> str:
-        """Return a debug-friendly representation of the path result."""
-        names = [zone.name for zone in self.path]
-        return f"PathResult(path={names}, total_cost={self.total_cost})"
-
 
 class Pathfinder:
     """Hand-written Dijkstra shortest-path search over a Graph.

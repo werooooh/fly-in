@@ -122,20 +122,3 @@ class Zone:
             self.incoming_reservations
         )
         return committed + incoming_count <= self.max_drones
-
-    def __repr__(self) -> str:
-        """Return a debug-friendly representation of the zone."""
-        return (
-            f"Zone(name={self.name!r}, type={self.zone_type.value}, "
-            f"pos=({self.x}, {self.y}))"
-        )
-
-    def __eq__(self, other: object) -> bool:
-        """Compare zones by name, which is expected to be unique."""
-        if not isinstance(other, Zone):
-            return NotImplemented
-        return self.name == other.name
-
-    def __hash__(self) -> int:
-        """Hash a zone by its unique name."""
-        return hash(self.name)

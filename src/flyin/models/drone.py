@@ -10,8 +10,6 @@ class DroneStatus(Enum):
     Attributes:
         WAITING: The drone is stationed at a zone and not moving
             this turn.
-        MOVING: The drone is moving into a normal or priority zone
-            this turn (single-turn movement).
         IN_TRANSIT: The drone is traversing a connection toward a
             restricted zone and is committed to arriving after the
             required number of turns.
@@ -19,7 +17,6 @@ class DroneStatus(Enum):
     """
 
     WAITING = "waiting"
-    MOVING = "moving"
     IN_TRANSIT = "in_transit"
     ARRIVED = "arrived"
 
@@ -99,13 +96,3 @@ class Drone:
         if not self.path:
             raise IndexError("Cannot advance an empty path.")
         self.path.pop(0)
-
-    def __repr__(self) -> str:
-        """Return a debug-friendly representation of the drone."""
-        zone_name = (
-            self.current_zone.name if self.current_zone else "in-transit"
-        )
-        return (
-            f"Drone({self.label()}, at={zone_name}, "
-            f"status={self.status.value})"
-        )
