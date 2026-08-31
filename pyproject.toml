@@ -1,5 +1,5 @@
 [project]
-name = "fly-in"
+name = "flyin"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-fly-in = "fly_in:main"
+flyin = "flyin:main"
 
 [build-system]
 requires = ["uv_build>=0.12.0,<0.13.0"]
@@ -26,3 +26,9 @@ dev = [
     "mypy>=2.3.0",
     "pytest>=9.1.1",
 ]
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flyin"]

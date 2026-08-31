@@ -1,5 +1,5 @@
-MAIN = flyin.py
-MAP = maps/easy/01_linear_path.txt
+MAIN = src/flyin/flyin.py
+#MAP = maps/easy/01_linear_path.txt
 #MAP = maps/easy/02_simple_fork.txt
 #MAP = maps/easy/03_basic_capacity.txt
 #MAP = maps/medium/01_dead_end_trap.txt
@@ -8,26 +8,32 @@ MAP = maps/easy/01_linear_path.txt
 #MAP = maps/hard/01_maze_nightmare.txt
 #MAP = maps/hard/02_capacity_hell.txt
 #MAP = maps/hard/03_ultimate_challenge.txt
-#MAP = maps/challenger/01_the_impossible_dream.txt
+MAP = maps/challenger/01_the_impossible_dream.txt
 
 install:
 	uv sync
 
-run: ${NAME}
-	uv run python ${NAME} ${MAP}
+run: ${MAIN}
+	uv run python -m flyin.flyin ${MAP}
 
 debug:
-	uv run python -m pdb ${NAME} ${MAP}
+	uv run python -m pdb -m flyin.flyin ${MAP}
 
 clean:
-	rm -rf .mypy_cache __pycache__ .pytest_cache
+	find . -type d \( \
+		-name "__pycache__" -o \
+		-name ".mypy_cache" -o \
+		-name ".pytest_cache" -o \
+		-name ".ruff_cache" \
+	\) -prune -exec rm -rf {} +
+	find . -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete
 
 lint:
-	uv run flake8 .
+	uv run flake8 --exclude=.venv .
 	uv run mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
 
 lint-strict:
-	uv run flake8 .
+	uv run flake8 --exclude=.venv .
 	uv run mypy . --strict
 
 .PHONY: install run debug clean lint lint-strict test
