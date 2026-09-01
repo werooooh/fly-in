@@ -28,11 +28,10 @@ make lint-strict     # flake8 + mypy --strict
 make clean           # remove caches
 ```
 
-`--no-visual` skips the pygame window and prints the full trace to
-stdout instead:
+The program takes the map file path as its only argument:
 
 ```
-uv run python -m flyin.flyin maps/easy/01_linear_path.txt --no-visual
+uv run python -m flyin.flyin maps/easy/01_linear_path.txt
 ```
 
 Once the pygame window is open: **Right/Left arrow** step one turn
@@ -139,16 +138,18 @@ connection: b-end
 ```
 
 ```
-uv run python -m flyin.flyin maps/easy/01_linear_path.txt --no-visual
+uv run python -m flyin.flyin maps/easy/01_linear_path.txt
 ```
 
-```
-D1-a
-D1-b D2-a
-D1-end D2-b
-D2-end
+The pygame window opens showing the map. The terminal prints the initial
+state, then one line per turn as you step through with the arrow keys:
 
-Completed in 4 turns.
+```
+Turn 0: (all drones at start)
+Turn 1: D1-a
+Turn 2: D1-b D2-a
+Turn 3: D1-end D2-b
+Turn 4: D2-end
 ```
 
 Both drones follow the only path, one turn behind each other since every

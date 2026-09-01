@@ -1,3 +1,8 @@
+"""Custom exceptions raised while parsing a map file."""
+
+from __future__ import annotations
+
+
 class ParseError(Exception):
     """Base exception for any error encountered while parsing a map.
 
@@ -16,7 +21,9 @@ class ParseError(Exception):
         """
         self.message = message
         self.line_number = line_number
-        prefix = f"Line {line_number}: " if line_number is not None else ""
+        prefix = (
+            f"Line {line_number}: " if line_number is not None else ""
+        )
         super().__init__(f"{prefix}{message}")
 
 

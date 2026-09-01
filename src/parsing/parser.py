@@ -1,10 +1,14 @@
+"""Parser that turns a Fly-in map file into a Graph and drone count."""
+
+from __future__ import annotations
+
 import re
 from pathlib import Path
 
-from flyin.models.connection import Connection
-from flyin.models.graph import Graph
-from flyin.models.zone import Zone, ZoneType
-from flyin.parsing.exceptions import (
+from models.connection import Connection
+from models.graph import Graph
+from models.zone import Zone, ZoneType
+from parsing.exceptions import (
     MetadataError,
     ParseError,
     StructuralError,
@@ -18,7 +22,8 @@ _ZONE_LINE_RE = re.compile(
     r"(?:\s*\[(?P<metadata>.*)\])?$"
 )
 _CONNECTION_LINE_RE = re.compile(
-    r"^(?P<a>[^\s\[\]-]+)-(?P<b>[^\s\[\]-]+)" r"(?:\s*\[(?P<metadata>.*)\])?$"
+    r"^(?P<a>[^\s\[\]-]+)-(?P<b>[^\s\[\]-]+)"
+    r"(?:\s*\[(?P<metadata>.*)\])?$"
 )
 _NB_DRONES_RE = re.compile(r"^(?P<count>\d+)$")
 
@@ -56,12 +61,12 @@ class MapParser:
         if not path.is_file():
             raise ParseError(f"Map file not found: {filepath!r}")
 
-        with open(path, "r") as handle:
+        with path.open("r", encoding="utf-8") as handle:
             for line_number, raw_line in enumerate(handle, start=1):
                 self._process_line(line_number, raw_line)
 
         self._validate_structure()
-        assert self.nb_drones is not None
+        assert self.nb_drones is not None  # guaranteed by validation
         return self.graph, self.nb_drones
 
     def _process_line(self, line_number: int, raw_line: str) -> None:

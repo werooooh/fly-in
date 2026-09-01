@@ -1,4 +1,4 @@
-MAIN = src/flyin/flyin.py
+MAIN = src/flyin.py
 MAP = maps/easy/01_linear_path.txt
 #MAP = maps/easy/02_simple_fork.txt
 #MAP = maps/easy/03_basic_capacity.txt
@@ -14,10 +14,10 @@ install:
 	uv sync
 
 run: ${MAIN}
-	uv run python -m flyin.flyin ${MAP}
+	uv run python ${MAIN} ${MAP}
 
 debug:
-	uv run python -m pdb -m flyin.flyin ${MAP}
+	uv run python -m pdb ${MAIN} ${MAP}
 
 clean:
 	find . -type d \( \

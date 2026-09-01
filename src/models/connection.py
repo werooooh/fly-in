@@ -1,4 +1,8 @@
-from flyin.models.zone import Zone
+"""Connection model representing a bidirectional edge between two zones."""
+
+from __future__ import annotations
+
+from models.zone import Zone
 
 
 class Connection:
@@ -59,7 +63,9 @@ class Connection:
             return self.zone_b
         if zone == self.zone_b:
             return self.zone_a
-        raise ValueError(f"Zone {zone.name!r} is not part of this connection.")
+        raise ValueError(
+            f"Zone {zone.name!r} is not part of this connection."
+        )
 
     def connects(self, name_a: str, name_b: str) -> bool:
         """Check whether this connection links the two given zone names.
@@ -88,4 +94,11 @@ class Connection:
         return (
             len(self.drones_in_transit) + incoming_count
             <= self.max_link_capacity
+        )
+
+    def __repr__(self) -> str:
+        """Return a debug-friendly representation of the connection."""
+        return (
+            f"Connection({self.zone_a.name!r}-{self.zone_b.name!r}, "
+            f"capacity={self.max_link_capacity})"
         )

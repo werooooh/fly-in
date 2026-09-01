@@ -1,6 +1,6 @@
-from flyin.models.graph import Graph
-from flyin.models.zone import Zone
-from flyin.pathfinding.dijkstra import Pathfinder
+from models.graph import Graph
+from models.zone import Zone
+from pathfinding.dijkstra import Pathfinder
 
 _PENALTY_PER_USE = 3
 
@@ -56,7 +56,8 @@ class PathDistributor:
             return []
 
         return [
-            distinct_paths[i % len(distinct_paths)] for i in range(nb_drones)
+            distinct_paths[i % len(distinct_paths)]
+            for i in range(nb_drones)
         ]
 
     def _find_distinct_paths(

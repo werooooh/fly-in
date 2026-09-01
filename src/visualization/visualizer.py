@@ -2,14 +2,14 @@ import re
 
 import pygame
 
-from flyin.models.graph import Graph
-from flyin.models.zone import Zone, ZoneType
+from models.graph import Graph
+from models.zone import Zone, ZoneType
 
-_WINDOW_WIDTH = 1280
-_WINDOW_HEIGHT = 720
+_WINDOW_WIDTH = 900
+_WINDOW_HEIGHT = 650
 _MARGIN = 80
-_ZONE_RADIUS = 13
-_DRONE_RADIUS = 4
+_ZONE_RADIUS = 26
+_DRONE_RADIUS = 8
 _FPS = 60
 
 _ZOOM_MIN = 0.2

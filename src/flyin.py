@@ -1,8 +1,8 @@
 import sys
 
-from flyin.parsing import ParseError, parse_file
-from flyin.simulation import SimulationEngine
-from flyin.visualization import run_visualization
+from parsing import ParseError, parse_file
+from simulation import SimulationEngine
+from visualization import run_visualization
 
 
 def main() -> int:

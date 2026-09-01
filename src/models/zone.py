@@ -1,3 +1,7 @@
+"""Zone model representing a single node in the drone routing graph."""
+
+from __future__ import annotations
+
 from enum import Enum
 
 
@@ -75,7 +79,18 @@ class Zone:
         is_start: bool = False,
         is_end: bool = False,
     ) -> None:
-        """Initialize a zone with the given properties."""
+        """Initialize a Zone.
+
+        Args:
+            name: Unique identifier of the zone.
+            x: X coordinate of the zone.
+            y: Y coordinate of the zone.
+            zone_type: The type of the zone. Defaults to NORMAL.
+            color: Optional color tag for visual representation.
+            max_drones: Maximum simultaneous occupancy. Defaults to 1.
+            is_start: Whether this zone is the start hub.
+            is_end: Whether this zone is the end hub.
+        """
         self.name = name
         self.x = x
         self.y = y
@@ -111,3 +126,20 @@ class Zone:
             self.incoming_reservations
         )
         return committed + incoming_count <= self.max_drones
+
+    def __repr__(self) -> str:
+        """Return a debug-friendly representation of the zone."""
+        return (
+            f"Zone(name={self.name!r}, type={self.zone_type.value}, "
+            f"pos=({self.x}, {self.y}))"
+        )
+
+    def __eq__(self, other: object) -> bool:
+        """Compare zones by name, which is expected to be unique."""
+        if not isinstance(other, Zone):
+            return NotImplemented
+        return self.name == other.name
+
+    def __hash__(self) -> int:
+        """Hash a zone by its unique name."""
+        return hash(self.name)

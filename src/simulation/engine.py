@@ -1,8 +1,8 @@
-from flyin.models.drone import Drone, DroneStatus
-from flyin.models.graph import Graph
-from flyin.pathfinding.dijkstra import Pathfinder
-from flyin.pathfinding.distribution import PathDistributor
-from flyin.simulation.scheduler import TurnScheduler
+from models.drone import Drone, DroneStatus
+from models.graph import Graph
+from pathfinding.dijkstra import Pathfinder
+from pathfinding.distribution import PathDistributor
+from simulation.scheduler import TurnScheduler
 
 
 class SimulationEngine:
@@ -16,7 +16,10 @@ class SimulationEngine:
     """
 
     def __init__(
-        self, graph: Graph, nb_drones: int, max_turns: int = 1000
+        self,
+        graph: Graph,
+        nb_drones: int,
+        max_turns: int = 1000,
     ) -> None:
         """Initialize the simulation engine.
 
@@ -31,7 +34,9 @@ class SimulationEngine:
             RuntimeError: If the graph has no start or end zone set.
         """
         if graph.start_zone is None or graph.end_zone is None:
-            raise RuntimeError("Graph must have both a start and an end zone.")
+            raise RuntimeError(
+                "Graph must have both a start and an end zone."
+            )
 
         self.graph = graph
         self.drones: list[Drone] = [
@@ -59,6 +64,7 @@ class SimulationEngine:
                 (indicating an unresolved deadlock).
         """
         self._assign_initial_paths()
+        self._print_occupancy()
 
         while not self._all_arrived():
             if self.current_turn >= self._max_turns:
@@ -68,6 +74,7 @@ class SimulationEngine:
                 )
             self.current_turn += 1
             self.turn_log.append(self._step())
+            self._print_occupancy()
 
         return self.turn_log
 
@@ -139,6 +146,34 @@ class SimulationEngine:
             DroneStatus.ARRIVED if next_zone.is_end else DroneStatus.WAITING
         )
         return f"{drone.label()}-{next_zone.name}"
+
+    def _print_occupancy(self) -> None:
+        """Print zone and connection occupancy for the current turn.
+
+        Start and end zones are shown without a capacity ratio since
+        they are always unlimited.
+        """
+        zone_parts = []
+        for zone in self.graph.zones.values():
+            occupants = sorted(zone.current_occupants)
+            if zone.has_unlimited_capacity():
+                zone_parts.append(f"{zone.name}={occupants}")
+            else:
+                zone_parts.append(
+                    f"{zone.name}={occupants}"
+                    f"({len(zone.current_occupants)}/{zone.max_drones})"
+                )
+
+        connection_parts = [
+            f"{connection.name()}="
+            f"{len(connection.drones_in_transit)}/"
+            f"{connection.max_link_capacity}"
+            for connection in self.graph.connections
+        ]
+
+        print(f"Turn {self.current_turn} occupancy:")
+        print("  zones: " + " ".join(zone_parts))
+        print("  connections: " + " ".join(connection_parts))
 
     def _assign_initial_paths(self) -> None:
         """Compute and assign a path to every drone, spread across routes.

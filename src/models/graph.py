@@ -1,5 +1,9 @@
-from flyin.models.connection import Connection
-from flyin.models.zone import Zone
+"""Graph model representing the full network of zones and connections."""
+
+from __future__ import annotations
+
+from models.connection import Connection
+from models.zone import Zone
 
 
 class Graph:
@@ -127,3 +131,10 @@ class Graph:
             True if both start_zone and end_zone are set.
         """
         return self.start_zone is not None and self.end_zone is not None
+
+    def __repr__(self) -> str:
+        """Return a debug-friendly representation of the graph."""
+        return (
+            f"Graph(zones={len(self.zones)}, "
+            f"connections={len(self.connections)})"
+        )
