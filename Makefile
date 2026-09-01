@@ -1,5 +1,5 @@
 MAIN = src/flyin.py
-MAP = maps/easy/01_linear_path.txt
+#MAP = maps/easy/01_linear_path.txt
 #MAP = maps/easy/02_simple_fork.txt
 #MAP = maps/easy/03_basic_capacity.txt
 #MAP = maps/medium/01_dead_end_trap.txt
@@ -8,7 +8,7 @@ MAP = maps/easy/01_linear_path.txt
 #MAP = maps/hard/01_maze_nightmare.txt
 #MAP = maps/hard/02_capacity_hell.txt
 #MAP = maps/hard/03_ultimate_challenge.txt
-#MAP = maps/challenger/01_the_impossible_dream.txt
+MAP = maps/challenger/01_the_impossible_dream.txt
 
 install:
 	uv sync

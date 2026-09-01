@@ -99,13 +99,3 @@ class Drone:
         if not self.path:
             raise IndexError("Cannot advance an empty path.")
         self.path.pop(0)
-
-    def __repr__(self) -> str:
-        """Return a debug-friendly representation of the drone."""
-        zone_name = (
-            self.current_zone.name if self.current_zone else "in-transit"
-        )
-        return (
-            f"Drone({self.label()}, at={zone_name}, "
-            f"status={self.status.value})"
-        )

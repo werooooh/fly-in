@@ -5,8 +5,8 @@ import pygame
 from models.graph import Graph
 from models.zone import Zone, ZoneType
 
-_WINDOW_WIDTH = 900
-_WINDOW_HEIGHT = 650
+_WINDOW_WIDTH = 1280
+_WINDOW_HEIGHT = 720
 _MARGIN = 80
 _ZONE_RADIUS = 26
 _DRONE_RADIUS = 8
