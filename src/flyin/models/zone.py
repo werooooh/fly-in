@@ -75,18 +75,7 @@ class Zone:
         is_start: bool = False,
         is_end: bool = False,
     ) -> None:
-        """Initialize a Zone.
-
-        Args:
-            name: Unique identifier of the zone.
-            x: X coordinate of the zone.
-            y: Y coordinate of the zone.
-            zone_type: The type of the zone. Defaults to NORMAL.
-            color: Optional color tag for visual representation.
-            max_drones: Maximum simultaneous occupancy. Defaults to 1.
-            is_start: Whether this zone is the start hub.
-            is_end: Whether this zone is the end hub.
-        """
+        """Initialize a zone with the given properties."""
         self.name = name
         self.x = x
         self.y = y
