@@ -1,7 +1,3 @@
-"""Parser that turns a Fly-in map file into a Graph and drone count."""
-
-from __future__ import annotations
-
 import re
 from pathlib import Path
 
@@ -22,8 +18,7 @@ _ZONE_LINE_RE = re.compile(
     r"(?:\s*\[(?P<metadata>.*)\])?$"
 )
 _CONNECTION_LINE_RE = re.compile(
-    r"^(?P<a>[^\s\[\]-]+)-(?P<b>[^\s\[\]-]+)"
-    r"(?:\s*\[(?P<metadata>.*)\])?$"
+    r"^(?P<a>[^\s\[\]-]+)-(?P<b>[^\s\[\]-]+)" r"(?:\s*\[(?P<metadata>.*)\])?$"
 )
 _NB_DRONES_RE = re.compile(r"^(?P<count>\d+)$")
 

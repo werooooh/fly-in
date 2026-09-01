@@ -1,5 +1,3 @@
-"""Map file parsing for the Fly-in drone routing simulation."""
-
 from parsing.exceptions import (
     MetadataError,
     ParseError,

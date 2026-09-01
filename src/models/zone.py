@@ -1,7 +1,3 @@
-"""Zone model representing a single node in the drone routing graph."""
-
-from __future__ import annotations
-
 from enum import Enum
 
 

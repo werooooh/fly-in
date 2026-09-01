@@ -1,7 +1,3 @@
-"""Graph model representing the full network of zones and connections."""
-
-from __future__ import annotations
-
 from models.connection import Connection
 from models.zone import Zone
 

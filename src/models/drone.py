@@ -1,7 +1,3 @@
-"""Drone model representing a single agent moving through the network."""
-
-from __future__ import annotations
-
 from enum import Enum
 
 from models.connection import Connection

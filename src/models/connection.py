@@ -1,7 +1,3 @@
-"""Connection model representing a bidirectional edge between two zones."""
-
-from __future__ import annotations
-
 from models.zone import Zone
 
 
@@ -63,9 +59,7 @@ class Connection:
             return self.zone_b
         if zone == self.zone_b:
             return self.zone_a
-        raise ValueError(
-            f"Zone {zone.name!r} is not part of this connection."
-        )
+        raise ValueError(f"Zone {zone.name!r} is not part of this connection.")
 
     def connects(self, name_a: str, name_b: str) -> bool:
         """Check whether this connection links the two given zone names.

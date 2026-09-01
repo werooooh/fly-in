@@ -1,5 +1,3 @@
-"""Data models for the Fly-in drone routing simulation."""
-
 from models.connection import Connection
 from models.drone import Drone, DroneStatus
 from models.graph import Graph
