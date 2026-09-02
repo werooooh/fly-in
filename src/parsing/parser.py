@@ -1,5 +1,4 @@
 import re
-from pathlib import Path
 
 from models.connection import Connection
 from models.graph import Graph
@@ -52,16 +51,15 @@ class MapParser:
             ParseError: If the file cannot be read, or contains any
                 syntax, metadata, or structural error.
         """
-        path = Path(filepath)
-        if not path.is_file():
-            raise ParseError(f"Map file not found: {filepath!r}")
-
-        with path.open("r", encoding="utf-8") as handle:
-            for line_number, raw_line in enumerate(handle, start=1):
-                self._process_line(line_number, raw_line)
+        try:
+            with open(filepath, "r", encoding="utf-8") as handle:
+                for line_number, raw_line in enumerate(handle, start=1):
+                    self._process_line(line_number, raw_line)
+        except FileNotFoundError:
+            raise ParseError(f"Map file not found: {filepath!r}") from None
 
         self._validate_structure()
-        assert self.nb_drones is not None  # guaranteed by validation
+        assert self.nb_drones is not None
         return self.graph, self.nb_drones
 
     def _process_line(self, line_number: int, raw_line: str) -> None:
@@ -92,7 +90,7 @@ class MapParser:
             "nb_drones": self._parse_nb_drones,
             "start_hub": lambda ln, r: self._parse_zone(ln, r, is_start=True),
             "end_hub": lambda ln, r: self._parse_zone(ln, r, is_end=True),
-            "hub": lambda ln, r: self._parse_zone(ln, r),
+            "hub": self._parse_zone,
             "connection": self._parse_connection,
         }
 

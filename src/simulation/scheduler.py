@@ -139,10 +139,6 @@ class TurnScheduler:
         next_zone.incoming_reservations.add(drone.label())
         drone.current_zone = None
         drone.status = DroneStatus.IN_TRANSIT
-        # The commit turn itself counts as the first of the zone's
-        # movement_cost turns (subject: drone "MUST reach its
-        # destination during the next turn"), so only cost - 1 more
-        # turns remain before landing.
         drone.turns_remaining = next_zone.zone_type.movement_cost() - 1
         drone.transit_connection = connection
         return f"{drone.label()}-{connection.name()}"
