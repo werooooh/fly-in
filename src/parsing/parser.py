@@ -52,7 +52,7 @@ class MapParser:
                 syntax, metadata, or structural error.
         """
         try:
-            with open(filepath, "r", encoding="utf-8") as handle:
+            with open(filepath, "r") as handle:
                 for line_number, raw_line in enumerate(handle, start=1):
                     self._process_line(line_number, raw_line)
         except FileNotFoundError:
@@ -158,7 +158,9 @@ class MapParser:
             line_number, match.group("metadata"), _ZONE_METADATA_KEYS
         )
         zone_type = self._resolve_zone_type(line_number, metadata)
-        max_drones = self._resolve_max_drones(line_number, metadata)
+        max_drones = self._resolve_positive_int(
+            line_number, metadata, "max_drones", default=1
+        )
 
         zone = Zone(
             name=match.group("name"),
@@ -278,25 +280,6 @@ class MapParser:
                 f"Invalid zone type: {raw_type!r}.", line_number
             )
         return _ZONE_TYPES_BY_VALUE[raw_type]
-
-    def _resolve_max_drones(
-        self, line_number: int, metadata: dict[str, str]
-    ) -> int:
-        """Resolve the max_drones= metadata entry.
-
-        Args:
-            line_number: 1-indexed line position, for error reporting.
-            metadata: Parsed metadata for the zone line.
-
-        Returns:
-            The declared max_drones value, defaulting to 1.
-
-        Raises:
-            MetadataError: If the value is not a positive integer.
-        """
-        return self._resolve_positive_int(
-            line_number, metadata, "max_drones", default=1
-        )
 
     def _resolve_positive_int(
         self,
